@@ -1,0 +1,41 @@
+indices:
+  "000016.SH": "上证50"
+  "000300.SH": "沪深300"
+
+data:
+  start_date: "20150101"
+  end_date: null
+  cache_dir: "data/cache"
+  refresh: false
+
+risk_score:
+  weights:
+    trend: 0.30
+    momentum: 0.20
+    volatility: 0.20
+    drawdown: 0.20
+    liquidity: 0.10
+  volatility_annualization: 252
+  thresholds:
+    opportunity: 30
+    mild_opportunity: 50
+    neutral_risk: 70
+
+strategy:
+  # Positions are applied on the next trading day to reduce look-ahead bias.
+  signal_lag_days: 1
+  position_rules:
+    - max_score: 30
+      position: 1.0
+    - max_score: 50
+      position: 0.7
+    - max_score: 70
+      position: 0.4
+    - max_score: 100
+      position: 0.2
+
+backtest:
+  annual_trading_days: 252
+  transaction_cost: 0.0002
+  output_dir: "reports"
+  figure_dir: "reports/figures"
